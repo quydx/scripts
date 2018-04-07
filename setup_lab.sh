@@ -1,3 +1,5 @@
+sudo yum install yum-utils -y 
+sudo yum install -y epel-release
 # update yum
 sudo yum update -y
 # install vim
@@ -7,8 +9,8 @@ cd vim-setup/
 ./setup.sh
 cd 
 # set zsh + oh my zsh
-sudo yum install zsh 
-sudo yum install wget
+sudo yum install zsh -y
+sudo yum install wget -y
 sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 
 
