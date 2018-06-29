@@ -84,6 +84,8 @@ yum --enablerepo=remi,remi-php71 install php-opcache php-pecl-apcu php-cli php-p
 
 sed -i "/;user/c\user = nginx" /etc/php-fpm.d/www.conf
 sed -i "/;group/c\group = nginx" /etc/php-fpm.d/www.conf
+sed -i "/;listen.owner/c\listen.owner = nginx" /etc/php-fpm.d/www.conf
+sed -i "/;listen.group/c\listen.group = nginx" /etc/php-fpm.d/www.conf
 sed -i "/;listen/c\;listen = 127.0.0.1:9000" /etc/php-fpm.d/www.conf
 systemctl start php-fpm.service
 systemctl enable php-fpm.service
