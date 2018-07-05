@@ -1,7 +1,7 @@
 #!/bin/bash
 echo "[influxdb]
 name = InfluxData Repository - RHEL $releasever
-baseurl = https://repos.influxdata.com/rhel/$releasever/$basearch/stable
+baseurl = https://repos.influxdata.com/rhel/\$releasever/\$basearch/stable
 enabled = 1
 gpgcheck = 1
 gpgkey = https://repos.influxdata.com/influxdb.key" >> /etc/yum.repos.d/influxdata.repo
