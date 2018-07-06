@@ -17,7 +17,7 @@ sudo yum install telegraf -y
 cp /etc/telegraf/telegraf.conf /etc/telegraf/telegraf.conf.bak
 cp telegraf.conf /etc/telegraf/telegraf.conf
 sudo systemctl start telegraf
-influx -username '$user' -password '$passwd' -execute 'show databases'
+influx -username '$1' -password '$2' -execute 'show databases'
 sudo yum install kapacitor -y
 cp /etc/kapacitor/kapacitor.conf /etc/kapacitor/kapacitor.conf.bak
 cp kapacitor.conf /etc/kapacitor/kapacitor.conf
