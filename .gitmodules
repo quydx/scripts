@@ -1,3 +1,6 @@
 [submodule "tickstack/tickdocker/tickstack/tickdocker/TICK-docker"]
 	path = tickstack/tickdocker/tickstack/tickdocker/TICK-docker
 	url = https://github.com/influxdata/TICK-docker
+[submodule "tickstack/tickdocker/tick-DOCKER"]
+	path = tickstack/tickdocker/tick-DOCKER
+	url = https://github.com/influxdata/TICK-docker
