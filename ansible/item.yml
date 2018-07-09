@@ -1,0 +1,21 @@
+---
+- hosts: all
+  sudo: yes
+
+  tasks:
+    - name: Install Apache.
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - apache2
+        - mysql-server
+        - php
+        - php-mysql
+    - name: Restart Apache and Mysql
+      service:
+        name: "{{item}}"
+        state:  running
+      with_items:
+          - apache2
+          - mysql

@@ -1,0 +1,31 @@
+---
+- hosts: all
+  sudo: yes
+
+
+
+  tasks:
+    - name: Install Apache.
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - apache2
+        - mysql-server
+        - php
+        - php-mysql
+
+    - name: deploy html file
+      template:
+        src: /tmp/index.html
+        dest: /var/www/html/index.html
+      notify: restart web
+
+  handlers:
+    - name: restart web
+      service:
+        name: "{{ item }}"
+        state:  running
+      with_items:
+          - apache2
+          - mysql

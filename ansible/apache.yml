@@ -1,0 +1,31 @@
+- hosts: servertest 
+  # remote_user: root
+  remote_user: vega
+  sudo: yes
+  tasks:
+  ########## Cài đặt gói tin httpd và start .
+  - name: Install HTTP
+    yum: name=httpd state=latest
+  - name: Start HTTPD after install
+    service: name=httpd state=started
+########### Deploy config
+#backup
+  - name: Backup config HTTP (backup from client)
+    command: cp /etc/httpd/conf/httpd.conf /etc/httpd/conf/httpd.conf.backup1
+#Deploy
+  - name: Deploy config httpd
+    template:
+     src: "/etc/ansible/config/httpd.conf"
+     dest: "/etc/httpd/conf/httpd.conf"
+     owner: root
+     group: root
+     mode: 0644
+########### Đẩy source về client
+  - name: Deploy web file
+    template:
+     src: "/etc/ansible/config/index.html"
+     dest: "/var/www/html/index.html"
+
+########### Khởi động lại apache để áp dụng config
+  - name: Start HTTPD after install
+    service: name=httpd state=restarted
