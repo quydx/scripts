@@ -1,0 +1,5 @@
+- hosts: testservers
+  sudo: yes
+  tasks:
+    - name: install bmon
+      yum: name=bmon state=latest

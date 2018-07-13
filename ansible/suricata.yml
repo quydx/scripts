@@ -1,0 +1,41 @@
+- hosts: localhost
+  user: vega
+  sudo: yes
+  tasks:
+    - name: install dependencies
+      yum: name={{ item }} state=installed
+      with_items:
+        - gcc
+        - libpcap-devel
+        - pcre-devel
+        - libyaml-devel
+        - file-devel
+        - zlib-devel
+        - jansson-devel
+        - nss-devel
+        - libcap-ng-devel
+        - libnet-devel
+        - tar
+        - make
+        - libnetfilter_queue-devel
+        - lua-devel
+    - name: download and decompress source
+      command: "{{ item }}"
+      with_items:
+        - wget http://www.openinfosecfoundation.org/download/suricata-3.1.tar.gz
+        - tar -xvzf suricata-3.1.tar.gz
+      args:
+        chdir: /root
+        executable: /bin/bash
+    - name: build suricata
+      command: "{{ item }}"
+      with_items:
+        - ./configure --prefix=/usr --sysconfdir=/etc --localstatedir=/var --enable-nfqueue --enable-lua
+        - make
+        - make install-full
+        - ldconfig
+      args:
+        chdir: /root/suricata-3.1
+        executable: /bin/bash
+    - name: start service suricata
+      command: "suricata -c suricata.yaml -i eth0 -D"

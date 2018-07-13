@@ -4,3 +4,6 @@
 [submodule "tickstack/tickdocker/tick-DOCKER"]
 	path = tickstack/tickdocker/tick-DOCKER
 	url = https://github.com/influxdata/TICK-docker
+[submodule "elk/elasticsearch-tutorial"]
+	path = elk/elasticsearch-tutorial
+	url = https://github.com/BuildingXwithJS/elasticsearch-tutorial.git
