@@ -18,10 +18,10 @@ if [ ! -x /usr/bin/wget ]; then
 fi
 
 {
-wget http://nginx.org/download/nginx-1.14.0.tar.gz -P ~ && tar zxvf ~/nginx-1.14.0.tar.gz
-wget https://ftp.pcre.org/pub/pcre/pcre-8.40.tar.gz -P ~ && tar xzvf ~/pcre-8.40.tar.gz
-wget https://www.zlib.net/zlib-1.2.11.tar.gz -P ~ && tar xzvf ~/zlib-1.2.11.tar.gz
-wget https://www.openssl.org/source/openssl-1.1.0f.tar.gz -P ~ && tar xzvf ~/openssl-1.1.0f.tar.gz
+wget http://nginx.org/download/nginx-1.14.0.tar.gz -P ~ && tar zxvf ~/nginx-1.14.0.tar.gz -C ~
+wget https://ftp.pcre.org/pub/pcre/pcre-8.40.tar.gz -P ~ && tar xzvf ~/pcre-8.40.tar.gz -C ~
+wget https://www.zlib.net/zlib-1.2.11.tar.gz -P ~ && tar xzvf ~/zlib-1.2.11.tar.gz -C ~
+wget https://www.openssl.org/source/openssl-1.1.0f.tar.gz -P ~ && tar xzvf ~/openssl-1.1.0f.tar.gz -C ~
 } &> /dev/null
 echo "Remove all *tar.gz"
 rm -rf *.tar.gz
