@@ -1,15 +1,32 @@
-sudo yum check-update || sudo yum update -y
+#!/bin/bash
+function checkerr {
+  if [ $? -eq 0 ];then 
+    echo "$1 successful"
+  else
+    echo "$1 failed"
+  fi
+}
+
+{ sudo yum check-update || sudo yum update -y
 sudo yum groupinstall -y 'Development Tools' && sudo yum install -y vim
 sudo yum install -y epel-release
 sudo yum install -y perl perl-devel perl-ExtUtils-Embed libxslt libxslt-devel libxml2 libxml2-devel gd gd-devel GeoIP GeoIP-devel
+} &> /dev/null
+if [ ! -x /usr/bin/wget ]; then 
+  sudo yum install wget -y 
+fi
+{
 wget http://nginx.org/download/nginx-1.14.0.tar.gz && tar zxvf nginx-1.14.0.tar.gz
 wget https://ftp.pcre.org/pub/pcre/pcre-8.40.tar.gz && tar xzvf pcre-8.40.tar.gz
 wget https://www.zlib.net/zlib-1.2.11.tar.gz && tar xzvf zlib-1.2.11.tar.gz
 wget https://www.openssl.org/source/openssl-1.1.0f.tar.gz && tar xzvf openssl-1.1.0f.tar.gz
+} &> /dev/null
+echo "Remove all *tar.gz"
 rm -rf *.tar.gz
 cd ~/nginx-1.14.0
 sudo cp ~/nginx-1.14.0/man/nginx.8 /usr/share/man/man8
 sudo gzip /usr/share/man/man8/nginx.8
+echo "Build nginx"
 ./configure --prefix=/etc/nginx \
             --sbin-path=/usr/sbin/nginx \
             --modules-path=/usr/lib64/nginx/modules \
@@ -64,9 +81,15 @@ sudo gzip /usr/share/man/man8/nginx.8
             --with-openssl=../openssl-1.1.0f \
             --with-openssl-opt=no-nextprotoneg \
             --with-debug
+checkerr "config"
 make 
+checkerr "make"
 sudo make install
+checkerr "make install"
 sudo ln -s /usr/lib64/nginx/modules /etc/nginx/modules
+if [ `id -u nginx 2>/dev/null` || echo -1 -ge 0 ];then 
+  userdel -r nginx
+fi 
 sudo useradd --system --home /var/cache/nginx --shell /sbin/nologin --comment "nginx user" --user-group nginx
 sudo mkdir -p /var/cache/nginx && sudo nginx -t
 cp nginx.service /usr/lib/systemd/system/nginx.service
@@ -81,13 +104,11 @@ yum --enablerepo=remi,remi-php71 install php-fpm php-common -y
 yum --enablerepo=remi,remi-php71 install php-opcache php-pecl-apcu php-cli php-pear php-pdo php-mysqlnd php-pgsql \
  php-pecl-mongodb php-pecl-redis php-pecl-memcache php-pecl-memcached php-gd php-mbstring php-mcrypt php-xml -y
 
+mv /etc/php-fpm.d/www.conf /etc/php-fpm.d/www.conf.bak
+cp www.conf /etc/php-fpm.d/www.conf
 
-sed -i "/;user/c\user = nginx" /etc/php-fpm.d/www.conf
-sed -i "/;group/c\group = nginx" /etc/php-fpm.d/www.conf
-sed -i "/;listen.owner/c\listen.owner = nginx" /etc/php-fpm.d/www.conf
-sed -i "/;listen.group/c\listen.group = nginx" /etc/php-fpm.d/www.conf
-sed -i "/;listen/c\;listen = 127.0.0.1:9000" /etc/php-fpm.d/www.conf
 systemctl start php-fpm.service
 systemctl enable php-fpm.service
 systemctl restart nginx
+echo "setup done !!"
 

@@ -4,6 +4,7 @@ sudo yum install -y epel-release
 sudo yum update -y
 # install vim
 sudo yum install vim -y 
+sudo yum install git -y
 git clone https://github.com/quydx/vim-setup.git
 cd vim-setup/
 ./setup.sh
