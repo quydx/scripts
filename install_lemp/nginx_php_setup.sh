@@ -86,7 +86,7 @@ echo "Build nginx"
 make 
 sudo make install
 sudo ln -s /usr/lib64/nginx/modules /etc/nginx/modules
-if [ `id -u nginx 2>/dev/null` || echo -1 -ge 0 ];then 
+if [ `id -u nginx 2>/dev/null || echo -1` -ge 0 ];then 
   userdel -r nginx
 fi 
 sudo useradd --system --home /var/cache/nginx --shell /sbin/nologin --comment "nginx user" --user-group nginx
@@ -96,7 +96,7 @@ cd -
 cp nginx.service /usr/lib/systemd/system/nginx.service
 sudo systemctl start nginx.service && sudo systemctl enable nginx.service
 
-cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
+mv /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 cp nginx.conf /etc/nginx/nginx.conf
 
 wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm -P ~
