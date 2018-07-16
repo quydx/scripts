@@ -94,6 +94,8 @@ sudo useradd --system --home /var/cache/nginx --shell /sbin/nologin --comment "n
 sudo mkdir -p /var/cache/nginx && sudo nginx -t
 cp nginx.service /usr/lib/systemd/system/nginx.service
 sudo systemctl start nginx.service && sudo systemctl enable nginx.service
+
+cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 cp nginx.conf /etc/nginx/nginx.conf
 
 wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
@@ -109,6 +111,9 @@ cp www.conf /etc/php-fpm.d/www.conf
 
 systemctl start php-fpm.service
 systemctl enable php-fpm.service
+
+touch /etc/nginx/html/index.php
+echo "<?php echo 'welcome, nginx-vtg-2;'?>" >> /etc/nginx/html/index.php
 systemctl restart nginx
 echo "setup done !!"
 
