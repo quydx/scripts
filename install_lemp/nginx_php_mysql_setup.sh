@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 function checkerr {
   if [ $? -eq 0 ];then 
     echo "$1 successful"
@@ -15,11 +16,12 @@ sudo yum install -y perl perl-devel perl-ExtUtils-Embed libxslt libxslt-devel li
 if [ ! -x /usr/bin/wget ]; then 
   sudo yum install wget -y 
 fi
+
 {
-wget http://nginx.org/download/nginx-1.14.0.tar.gz && tar zxvf nginx-1.14.0.tar.gz
-wget https://ftp.pcre.org/pub/pcre/pcre-8.40.tar.gz && tar xzvf pcre-8.40.tar.gz
-wget https://www.zlib.net/zlib-1.2.11.tar.gz && tar xzvf zlib-1.2.11.tar.gz
-wget https://www.openssl.org/source/openssl-1.1.0f.tar.gz && tar xzvf openssl-1.1.0f.tar.gz
+wget http://nginx.org/download/nginx-1.14.0.tar.gz -P ~ && tar zxvf ~/nginx-1.14.0.tar.gz
+wget https://ftp.pcre.org/pub/pcre/pcre-8.40.tar.gz -P ~ && tar xzvf ~/pcre-8.40.tar.gz
+wget https://www.zlib.net/zlib-1.2.11.tar.gz -P ~ && tar xzvf ~/zlib-1.2.11.tar.gz
+wget https://www.openssl.org/source/openssl-1.1.0f.tar.gz -P ~ && tar xzvf ~/openssl-1.1.0f.tar.gz
 } &> /dev/null
 echo "Remove all *tar.gz"
 rm -rf *.tar.gz
@@ -81,25 +83,24 @@ echo "Build nginx"
             --with-openssl=../openssl-1.1.0f \
             --with-openssl-opt=no-nextprotoneg \
             --with-debug
-checkerr "config"
 make 
-checkerr "make"
 sudo make install
-checkerr "make install"
 sudo ln -s /usr/lib64/nginx/modules /etc/nginx/modules
 if [ `id -u nginx 2>/dev/null` || echo -1 -ge 0 ];then 
   userdel -r nginx
 fi 
 sudo useradd --system --home /var/cache/nginx --shell /sbin/nologin --comment "nginx user" --user-group nginx
 sudo mkdir -p /var/cache/nginx && sudo nginx -t
+
+cd -
 cp nginx.service /usr/lib/systemd/system/nginx.service
 sudo systemctl start nginx.service && sudo systemctl enable nginx.service
 
 cp /etc/nginx/nginx.conf /etc/nginx/nginx.conf.bak
 cp nginx.conf /etc/nginx/nginx.conf
 
-wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm
-rpm -Uvh remi-release-7.rpm
+wget http://rpms.remirepo.net/enterprise/remi-release-7.rpm -P ~
+rpm -Uvh ~/remi-release-7.rpm
 yum install yum-utils -y
 yum-config-manager --enable remi-php71
 yum --enablerepo=remi,remi-php71 install php-fpm php-common -y
