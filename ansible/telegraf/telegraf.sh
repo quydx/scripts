@@ -7,7 +7,7 @@ function hasFile {
     echo "false"
   fi
 }
-$influx_repo_file="/etc/yum.repos.d/influxdata.repo"
+influx_repo_file="/etc/yum.repos.d/influxdata.repo"
 repo_existed=$(hasFile $influx_repo_file)
 if [ "$repo_existed" == "true" ];then
   echo "[influxdb]
