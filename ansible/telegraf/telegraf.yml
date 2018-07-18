@@ -3,7 +3,7 @@
   sudo: yes
   tasks:
     - name: copy bash shell and conf to host 
-      copy: src={{ item }} dest=/root mode=0755
+      copy: src={{ item }} dest=~ mode=0755
       with_items:
         - conf
         - telegraf.sh

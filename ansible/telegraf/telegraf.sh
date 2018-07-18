@@ -24,7 +24,7 @@ if [ -f /etc/telegraf/telegraf.conf ];then
   mv /etc/telegraf/telegraf.conf /etc/telegraf/telegraf.conf.ori
 fi
 if [ -d /etc/telegraf/telegraf.d/ ];then
-  cp -r conf/* /etc/telegraf/telegraf.d/
+  cp -r ~/conf/* /etc/telegraf/telegraf.d/
 fi
 cp telegraf.conf /etc/telegraf/
 sudo systemctl enable telegraf
