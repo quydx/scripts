@@ -26,6 +26,6 @@ fi
 if [ -d /etc/telegraf/telegraf.d/ ];then
   cp -r ~/conf/* /etc/telegraf/telegraf.d/
 fi
-cp telegraf.conf /etc/telegraf/
+cp ~/telegraf.conf /etc/telegraf/
 sudo systemctl enable telegraf
 sudo systemctl start telegraf
