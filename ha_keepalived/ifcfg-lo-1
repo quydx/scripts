@@ -1,0 +1,6 @@
+DEVICE=lo:1
+IPADDR=192.168.158.199
+NETMASK=255.255.255.255
+# If you're having problems with gated making 127.0.0.0/8 a martian,
+# you can change this to something else (255.255.255.255, for example)
+ONBOOT=yes
