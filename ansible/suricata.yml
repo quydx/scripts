@@ -38,4 +38,4 @@
         chdir: /root/suricata-3.1
         executable: /bin/bash
     - name: start service suricata
-      command: "suricata -c suricata.yaml -i eth0 -D"
+      command: "suricata -c /etc/suricata/suricata.yaml -i eth0 -D"

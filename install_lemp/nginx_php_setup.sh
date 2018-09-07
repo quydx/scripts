@@ -29,10 +29,10 @@ cd ~/nginx-1.14.0
 sudo cp ~/nginx-1.14.0/man/nginx.8 /usr/share/man/man8
 sudo gzip /usr/share/man/man8/nginx.8
 echo "Build nginx"
-./configure --prefix=/etc/nginx \
+./configure --prefix=/usr/local/nginx \
             --sbin-path=/usr/sbin/nginx \
             --modules-path=/usr/lib64/nginx/modules \
-            --conf-path=/etc/nginx/nginx.conf \
+            --conf-path=/usr/local/nginx/nginx.conf \
             --error-log-path=/var/log/nginx/error.log \
             --pid-path=/var/run/nginx.pid \
             --lock-path=/var/run/nginx.lock \
