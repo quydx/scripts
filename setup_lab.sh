@@ -1,3 +1,5 @@
+#!/bin/bash
+set -e
 sudo yum install yum-utils -y 
 sudo yum install -y epel-release
 # update yum
