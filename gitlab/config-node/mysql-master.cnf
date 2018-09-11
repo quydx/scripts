@@ -1,0 +1,7 @@
+[mysqld]
+server-id		= 1
+log_bin			= /var/log/mysql/mysql-bin.log
+binlog_do_db		= gitlabhq_production
+
+!includedir /etc/mysql/conf.d/
+!includedir /etc/mysql/mysql.conf.d/

@@ -7,3 +7,6 @@
 [submodule "elk/elasticsearch-tutorial"]
 	path = elk/elasticsearch-tutorial
 	url = https://github.com/BuildingXwithJS/elasticsearch-tutorial.git
+[submodule "gitlab/docker-gitlab"]
+	path = gitlab/docker-gitlab
+	url = https://github.com/sameersbn/docker-gitlab.git
