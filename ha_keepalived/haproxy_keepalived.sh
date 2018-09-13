@@ -1,3 +1,5 @@
+#!/bin/bash
+set -e 
 yum install haproxy -y
 cp /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg_orig
 
