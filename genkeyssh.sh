@@ -1,2 +1,2 @@
-ssh-keygen -t rsa -b 4096 -C "your_email@example.com"
-ssh-copy-id demo@198.51.100.0
+ssh-keygen -t rsa -b 4096 -C "quy196hp@gmail.com"
+ssh-copy-id root@192.168.158.11

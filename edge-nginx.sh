@@ -24,7 +24,8 @@ cd /usr/src/nginx-1.11.2
 make -j 4
 make install
 mkdir -p /usr/local/nginx-1.10.1/conf/sites-enabled/ /usr/local/nginx-1.10.1/var/lock/subsys/ /cdn_cache/
-
+echo 'PATH=$PATH:/usr/local/nginx-1.10.1/sbin/' >> /etc/profile
+source /etc/profile
 # NGINX PURGE CONFIG ##
 # proxy_cache_purge PURGE from 127.0.0.1 192.168.42.0/24 118.70.124.143/32 113.190.252.218/32 123.30.168.0/24 123.30.188.0/24 103.216.120.0/22 192.168.158.0/24;
 # curl -I -XPURGE -H 'Host: 106335df9.vws.vegacdn.vn' 'http://103.216.122.43/ttHOnH9RfpBanow6Xeo3vA/1519943243/cliptv_vod_v2/_definst_/amlst:cmc/media1/0/0/0/229/117358.mp4:levels*a_7_6_5_4_3_2_1:template*multiaudio.xml/playlist.m3u8?user='
