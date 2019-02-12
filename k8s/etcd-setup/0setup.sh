@@ -8,17 +8,19 @@ enabled=1
 gpgcheck=1
 gpgkey=https://packages.cloud.google.com/yum/doc/yum-key.gpg https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg" >> /etc/yum.repos.d/kubernetes.repo
 
-yum install kubectl-1.11.1-0 kubelet-1.11.1-0 kubeadm-1.11.1-0
+
 
 sysctl net.bridge.bridge-nf-call-ip6tables=1
 sysctl net.bridge.bridge-nf-call-iptables=1
-sysctl net.ipv4.ip_forward = 1
+sysctl net.ipv4.ip_forward=1
 sysctl -p
+sysctl --system
 
-echo k8s01 192.168.158.216 >> /etc/hosts
-echo k8s02 192.168.158.217 >> /etc/hosts
-echo k8s03 192.168.158.218 >> /etc/hosts
-echo k8slb 192.168.158.218 >> /etc/hosts
+
+echo k8s-master01 192.168.158.216 >> /etc/hosts
+echo k8s-master02 192.168.158.217 >> /etc/hosts
+echo k8s-master03 192.168.158.218 >> /etc/hosts
+echo k8slb 192.168.158.99 >> /etc/hosts
 
 kubeadm config images pull --kubernetes-version=v1.11.1
 
@@ -57,7 +59,32 @@ docker pull quay.io/coreos/hyperkube:v1.7.6_coreos.0
 swapoff -a
 sed -i 's/^SELINUX=.*/SELINUX=disabled/g' /etc/selinux/config
 
-sysctl --system
+
+
+yum install -y docker-compose-1.9.0-5.el7.noarch
+yum install -y docker-ce-17.12.0.ce-0.2.rc2.el7.centos.x86_64
+systemctl enable docker && systemctl start docker
+
+yum install -y kubelet-1.11.1-0.x86_64 kubeadm-1.11.1-0.x86_64 kubectl-1.11.1-0.x86_64
+systemctl enable kubelet && systemctl start kubelet
+
+
+#yum install -y keepalived
+#systemctl enable keepalived && systemctl restart keepalived
+
+
+#touch /etc/sysconfig/network-scripts/fcfg-lo:1
+# echo "DEVICE=lo:1
+# IPADDR=192.168.158.99
+# NETMASK=255.255.255.255
+# ONBOOT=yes" >> /etc/sysconfig/network-scripts/fcfg-lo:1
+
+
+
+
+
+
+
 
 
 
